@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WebFirst — We Build For Local Businesses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0A0F1E;
+      --navy-mid: #141B30;
+      --offwhite: #F7F4EE;
+      --amber: #F5A623;
+      --amber-dark: #D4871A;
+      --slate: #8A95A8;
+      --text-light: #C8D0DC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--offwhite);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--offwhite);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--amber); }
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-left: 2rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--amber); }
+    .nav-cta {
+      background: var(--amber);
+      color: var(--navy) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--amber-dark); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(245,166,35,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 820px;
+      color: var(--offwhite);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--amber);
+    }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-light);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--navy);
+      border: none; border-radius: 8px;
+      padding: 0.85rem 2rem;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--offwhite);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 0.85rem 2rem;
+      font-size: 1rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+
+    /* LIVE COUNTER SIGNATURE ELEMENT */
+    .counter-banner {
+      width: 100%;
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .counter-label {
+      font-size: 0.8rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 0.5rem;
+    }
+    .counter-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 1;
+      letter-spacing: -2px;
+      display: inline-block;
+    }
+    .counter-sub {
+      color: var(--text-light);
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+    .counter-sub strong { color: var(--offwhite); }
+
+    /* PROBLEM SECTION */
+    .section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      max-width: 640px;
+    }
+    .section p {
+      color: var(--text-light);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 580px;
+    }
+
+    /* CARDS GRID */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { border-color: var(--amber); transform: translateY(-4px); }
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .card p { font-size: 0.9rem; color: var(--text-light); line-height: 1.65; }
+
+    /* BEFORE / AFTER */
+    .before-after {
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 5rem 1.5rem;
+    }
+    .ba-inner {
+      max-width: 1100px; margin: 0 auto;
+    }
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .ba-col {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .ba-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      margin-bottom: 1.2rem;
+    }
+    .ba-tag.before { background: rgba(255,255,255,0.08); color: var(--slate); }
+    .ba-tag.after { background: rgba(245,166,35,0.15); color: var(--amber); }
+    .ba-col h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .ba-col ul { list-style: none; }
+    .ba-col ul li {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .ba-col ul li:last-child { border-bottom: none; }
+    .ba-arrow {
+      font-size: 2.5rem;
+      color: var(--amber);
+      font-weight: 900;
+    }
+
+    /* PROCESS */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      margin-top: 3rem;
+      position: relative;
+    }
+    .process-step {
+      padding: 1.5rem;
+      position: relative;
+    }
+    .process-step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -0.5rem; top: 1.5rem;
+      color: var(--amber); font-size: 1.2rem;
+    }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(245,166,35,0.2);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .process-step h4 {
+      font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem;
+    }
+    .process-step p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 5rem 1.5rem;
+    }
+    .t-inner { max-width: 1100px; margin: 0 auto; }
+    .t-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .t-card {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .t-stars { color: var(--amber); font-size: 0.9rem; margin-bottom: 1rem; }
+    .t-quote {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+    .t-author { font-size: 0.85rem; font-weight: 600; }
+    .t-role { font-size: 0.8rem; color: var(--slate); }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .price-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .price-card:hover { transform: translateY(-4px); }
+    .price-card.featured {
+      border-color: var(--amber);
+      background: rgba(245,166,35,0.05);
+    }
+    .price-badge {
+      position: absolute; top: -0.75rem; left: 50%; transform: translateX(-50%);
+      background: var(--amber); color: var(--navy);
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.25rem 0.9rem; border-radius: 20px;
+    }
+    .price-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; margin-bottom: 0.5rem;
+    }
+    .price-amount {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--amber);
+      line-height: 1;
+      margin: 0.8rem 0 0.3rem;
+    }
+    .price-amount span { font-size: 1rem; font-weight: 400; color: var(--slate); }
+    .price-desc { font-size: 0.85rem; color: var(--slate); margin-bottom: 1.5rem; }
+    .price-features { list-style: none; margin-bottom: 1.75rem; }
+    .price-features li {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .price-features li:last-child { border-bottom: none; }
+    .price-features li::before { content: '✓'; color: var(--amber); font-weight: 700; }
+    .btn-outline {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: var(--offwhite);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      display: block; text-align: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-outline.filled {
+      background: var(--amber); border-color: var(--amber); color: var(--navy);
+    }
+    .btn-outline.filled:hover { background: var(--amber-dark); border-color: var(--amber-dark); color: var(--navy); }
+
+    /* CONTACT */
+    .contact-section {
+      padding: 5rem 1.5rem;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-form {
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-top: 2.5rem;
+      text-align: left;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--offwhite);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.7rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--amber); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: var(--navy-mid); }
+    .submit-btn {
+      width: 100%;
+      background: var(--amber);
+      color: var(--navy);
+      border: none; border-radius: 8px;
+      padding: 0.9rem;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover { background: var(--amber-dark); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { font-size: 0.85rem; color: var(--slate); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.85rem; color: var(--slate); text-decoration: none; }
+    .footer-links a:hover { color: var(--amber); }
+
+    /* SCROLL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 700px) {
+      nav .nav-links { display: none; }
+      .ba-grid { grid-template-columns: 1fr; }
+      .ba-arrow { text-align: center; font-size: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .process-step:not(:last-child)::after { display: none; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Web<span>First</span></div>
+  <div class="nav-links">
+    <a href="#problem">Why Now</a>
+    <a href="#process">Process</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact" class="nav-cta">Get a Free Site Review</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Web Design for Local Businesses</p>
+  <h1>Your neighbours can't find you — <em>yet.</em></h1>
+  <p>We build beautiful, fast websites for local shops, restaurants, and salons that get found on Google and turn visitors into customers.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Get a Free Site Review</a>
+    <a href="#problem" class="btn-ghost">See how it works</a>
+  </div>
+</section>
+
+<!-- LIVE COUNTER SIGNATURE ELEMENT -->
+<div class="counter-banner">
+  <p class="counter-label">Right now in your city</p>
+  <div class="counter-number" id="counter">0</div>
+  <p class="counter-sub">local businesses have <strong>no website at all</strong> — and their customers can't find them online.</p>
+</div>
+
+<!-- PROBLEM SECTION -->
+<section id="problem">
+  <div class="section reveal">
+    <p class="section-label">The Opportunity</p>
+    <h2>Most local businesses are invisible online. That's a solvable problem.</h2>
+    <p>When someone searches for a salon, restaurant, or shop near them, the businesses that show up get the customers. The ones without websites get skipped — no matter how good they are.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Lost in Search</h3>
+        <p>Over 80% of customers search online before visiting a local business. No website means no discovery — even for loyal customers who want to check your hours.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📞</div>
+        <h3>Phone-tag is dead</h3>
+        <p>Customers want to book, browse menus, or check availability at midnight. Without a site, you're losing bookings while you sleep.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏆</div>
+        <h3>Competitors are winning</h3>
+        <p>Your competitor with a basic website is already showing up where you should be. A professional site levels — and tips — the playing field.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="before-after" id="ba">
+  <div class="ba-inner reveal">
+    <p class="section-label">The Difference</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;margin-bottom:0.5rem;">Before & After Working With Us</h2>
+    <div class="ba-grid">
+      <div class="ba-col">
+        <span class="ba-tag before">Before</span>
+        <h4>Without a Website</h4>
+        <ul>
+          <li>❌ Invisible on Google Maps & Search</li>
+          <li>❌ No way to show your menu or services</li>
+          <li>❌ Customers call competitors instead</li>
+          <li>❌ No online bookings or enquiries</li>
+          <li>❌ No reviews or social proof visible</li>
+        </ul>
+      </div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-col">
+        <span class="ba-tag after">After</span>
+        <h4>With WebFirst</h4>
+        <ul>
+          <li>✅ Ranked on Google in your neighbourhood</li>
+          <li>✅ Beautiful pages showcasing your work</li>
+          <li>✅ Customers find & contact you 24/7</li>
+          <li>✅ Online booking & WhatsApp integration</li>
+          <li>✅ Testimonials front and centre</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section reveal">
+    <p class="section-label">How We Work</p>
+    <h2>From conversation to live site in 7 days.</h2>
+    <p>We handle everything — you just tell us about your business.</p>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <h4>Free Review Call</h4>
+        <p>We look at your business and show you exactly what you're missing online. No pressure.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <h4>We Design & Build</h4>
+        <p>A custom site tailored to your business — your photos, your voice, your brand.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <h4>You Review & Approve</h4>
+        <p>We show you the site before it goes live. Unlimited revisions until you love it.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <h4>Go Live & Get Found</h4>
+        <p>We launch your site and set up your Google Business profile so customers find you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="t-inner reveal">
+    <p class="section-label">What Our Clients Say</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;">Real businesses. Real results.</h2>
+    <div class="t-grid">
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"We had zero online presence. Within two weeks of launching, customers were finding us on Google and our bookings went up by almost half. Best money we've ever spent."</p>
+        <p class="t-author">Amara O.</p>
+        <p class="t-role">Owner, Glow Naturals Hair Salon</p>
+      </div>
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"I didn't even know what SEO meant. The team handled everything and explained it all clearly. Our restaurant now shows up first when people search for us in the area."</p>
+        <p class="t-author">Chidi N.</p>
+        <p class="t-role">Owner, Calabar Kitchen</p>
+      </div>
+      <div class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Professional, fast, and they actually listened. The site looks exactly like us — not some generic template. Customers keep telling us it's impressive."</p>
+        <p class="t-author">Fatima A.</p>
+        <p class="t-role">Owner, Studio Elegance Boutique</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section reveal">
+    <p class="section-label">Pricing</p>
+    <h2>Transparent pricing. No surprises.</h2>
+    <p>Everything your business needs to get online and get found — at a fair price.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <div class="price-amount">₦150k <span>/ one-time</span></div>
+        <p class="price-desc">Perfect for getting online fast</p>
+        <ul class="price-features">
+          <li>Up to 3 pages</li>
+          <li>Mobile-friendly design</li>
+          <li>Google Business setup</li>
+          <li>Contact form</li>
+          <li>1 year of hosting</li>
+        </ul>
+        <a href="#contact" class="btn-outline">Get started</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <h3>Growth</h3>
+        <div class="price-amount">₦280k <span>/ one-time</span></div>
+        <p class="price-desc">For businesses ready to grow</p>
+        <ul class="price-features">
+          <li>Up to 7 pages</li>
+          <li>Custom photography direction</li>
+          <li>WhatsApp & booking integration</li>
+          <li>Local SEO optimisation</li>
+          <li>Google Maps integration</li>
+          <li>1 year hosting + support</li>
+        </ul>
+        <a href="#contact" class="btn-outline filled">Get started</a>
+      </div>
+      <div class="price-card">
+        <h3>Pro</h3>
+        <div class="price-amount">₦480k <span>/ one-time</span></div>
+        <p class="price-desc">Full digital presence package</p>
+        <ul class="price-features">
+          <li>Unlimited pages</li>
+          <li>Online menu / service catalogue</li>
+          <li>Customer reviews widget</li>
+          <li>Social media integration</li>
+          <li>Priority support (12 months)</li>
+          <li>Monthly performance reports</li>
+        </ul>
+        <a href="#contact" class="btn-outline">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section reveal">
+  <p class="section-label">Free Review</p>
+  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;margin-bottom:0.75rem;">Let's get your business online.</h2>
+  <p style="color:var(--text-light);font-size:1rem;line-height:1.7;">Tell us about your business and we'll send you a free website audit showing exactly what you're missing — no commitment needed.</p>
+  <div class="contact-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="e.g. Amara Johnson" />
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp</label>
+        <input type="tel" placeholder="+234 ..." />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Business Name</label>
+      <input type="text" placeholder="e.g. Glow Naturals Salon" />
+    </div>
+    <div class="form-group">
+      <label>Type of Business</label>
+      <select>
+        <option value="">Select your type...</option>
+        <option>Hair Salon / Beauty</option>
+        <option>Restaurant / Food</option>
+        <option>Clothing / Fashion Boutique</option>
+        <option>Supermarket / Shop</option>
+        <option>Other Local Business</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>What's your biggest challenge right now?</label>
+      <textarea placeholder="e.g. Customers don't know we exist, we rely only on word of mouth..."></textarea>
+    </div>
+    <button class="submit-btn" onclick="handleSubmit(this)">Send My Free Site Review →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Web<span>First</span></div>
+  <p>© 2026 WebFirst. We build websites for local legends.</p>
+  <div class="footer-links">
+    <a href="#problem">Why Now</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Animated counter
+  function animateCounter(target, duration) {
+    const el = document.getElementById('counter');
+    const start = 0;
+    const startTime = performance.now();
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(ease * target).toLocaleString();
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Pick a believable number based on a large city
+  animateCounter(14738, 2200);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Form submit handler
+  function handleSubmit(btn) {
+    btn.textContent = '✓ Request Sent! We\'ll be in touch within 24 hours.';
+    btn.style.background = '#1a7a3a';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
